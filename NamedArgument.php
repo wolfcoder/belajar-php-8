@@ -6,4 +6,4 @@ function sayHello(string $first, string $middle = "", string $last): void
 }
 
 
-sayHello(last: "Doe", first: "John");
+sayHello(last: "Doe", first: "John", );
