@@ -37,7 +37,10 @@ function validate(object $object): void
 {
     $class = new ReflectionClass($object);
     $properties = $class->getProperties();
+//    var_dump($properties);
+
     foreach ($properties as $property) {
+
         validateNotBlank($property, $object);
         validatelength($property, $object);
     }
@@ -46,10 +49,11 @@ function validate(object $object): void
 function validateNotBlank(ReflectionProperty $property, object $object): void
 {
     $attribute = $property->getAttributes(NotBlank::class);
+    var_dump(count($attribute));
 
     if (count($attribute) > 0) {
         if (!$property->isInitialized($object))
-            throw new Exception("Property $property->name is null");
+            throw new Exception("Property $property->name is not initialized");
         if ($property->getValue($object) == null)
             throw new Exception("Property $property->name is null");
     }
@@ -74,5 +78,5 @@ function validateLength(ReflectionProperty $property, object $object): void
 
 $request = new LoginRequest();
 $request->username = "three";
-$request->password = "musketeers";
+$request->password = "";
 validate($request);
